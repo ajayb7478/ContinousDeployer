@@ -24,17 +24,17 @@ def zip_folder(folder_path, output_path):
     :param output_path: Path to the output zip file.
     """
     try:
-        total_size = get_folder_size(folder_path)
-        zipped_size = 0
+        # Create a ZipFile object
         with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            # Add the entire folder and its contents to the zip file
             for root, _, files in os.walk(folder_path):
                 for file in files:
                     abs_path = os.path.join(root, file)
-                    rel_path = os.path.relpath(abs_path, folder_path)
+                    rel_path = os.path.relpath(abs_path, os.path.dirname(folder_path))
                     zipf.write(abs_path, rel_path)
-                    zipped_size += os.path.getsize(abs_path)
                     # Calculate progress and update the progress bar
-                    progress = min((zipped_size / total_size) * 100, 100)
+                    num_files = sum(len(files) for _, _, files in os.walk(folder_path))
+                    progress = min((len(zipf.namelist()) / num_files) * 100, 100)
                     num_equals = int(progress / 2)
                     progress_bar = '[' + '=' * num_equals + ' ' * (50 - num_equals) + ']'
                     sys.stdout.write(f"\rProgress: {progress_bar} {progress:.2f}%")
@@ -42,3 +42,6 @@ def zip_folder(folder_path, output_path):
         print(f"\nFolder '{folder_path}' successfully zipped to '{output_path}'")
     except Exception as e:
         print(f"Error zipping folder: {e}")
+
+# Example usage:
+
