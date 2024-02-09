@@ -9,7 +9,7 @@ import time
 folder_to_zip = 'F:/UNITY PROJECTS/FINAL BUILDS/Rocket Flyer'
 output_zip_file = 'F:/UNITY PROJECTS/FINAL BUILDS/Rocket Flyer.zip'
 version_file = 'F:/UNITY PROJECTS/FINAL BUILDS/Version.txt'
-destination_folder = 'F:/UNITY PROJECTS/Test Folder'
+destination_folder = 'F:/OneDrive/Game'
 print(f"Current version number: {read_version(version_file)}")
 print("Deleting old build and adding new build")
 delete_file(output_zip_file)
